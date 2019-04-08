@@ -11,6 +11,9 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DetailViewActivity extends AppCompatActivity {
     private TextView tvTitle;
@@ -18,7 +21,8 @@ public class DetailViewActivity extends AppCompatActivity {
     private TextView tvAverage;
     private TextView tvReleaseDate;
     private ImageView ivPoster;
-    private String mfixDate;
+    private String mFormatDate;
+
 
 
     @Override
@@ -39,8 +43,15 @@ public class DetailViewActivity extends AppCompatActivity {
             tvTitle.setText(mdb.getTitle());
             tvOverview.setText(mdb.getOverview());
             tvAverage.setText("Voter Rating: " + (Integer.toString(mdb.getVote_average())) + "/10");
-            mfixDate = mdb.getRelease_date().substring(0,4);
-            tvReleaseDate.setText("Release Date: " + mfixDate);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            try {
+                Date date = simpleDateFormat.parse(mdb.getRelease_date());
+                mFormatDate = new SimpleDateFormat("MM/dd/yyyy").format(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            tvReleaseDate.setText("Release Date: " + mFormatDate);
 
             //ADD PICASSO TO LOAD IMAGES
             Picasso.get()

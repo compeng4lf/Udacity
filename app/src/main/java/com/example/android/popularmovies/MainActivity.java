@@ -95,7 +95,10 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        recyclerView.removeAllViewsInLayout();
+
+                        if (recyclerView != null) {
+                            recyclerView.removeAllViewsInLayout();
+                        }
                         Errormsg.setVisibility(View.VISIBLE);
                         btnRefresh.setVisibility(View.VISIBLE);
                         invalidateOptionsMenu();
